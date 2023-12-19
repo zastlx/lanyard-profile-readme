@@ -55,7 +55,7 @@ const elapsedTime = (timestamp: any) => {
 const renderCard = async (body: LanyardTypes.Root, params: Parameters): Promise<string> => {
     let { data } = body;
 
-    let avatarBorderColor: string = "#747F8D",
+    let avatarBorderColor: string = "#9745f5",
         avatarExtension: string = "webp",
         statusExtension: string = "webp",
         activity: any = false,
@@ -103,7 +103,7 @@ const renderCard = async (body: LanyardTypes.Root, params: Parameters): Promise<
 
     switch (data.discord_status) {
         case "online":
-            avatarBorderColor = "#43B581";
+            avatarBorderColor = "#9745f5";
             break;
         case "idle":
             avatarBorderColor = "#FAA61A";
@@ -117,7 +117,8 @@ const renderCard = async (body: LanyardTypes.Root, params: Parameters): Promise<
     }
 
     let flags: string[] = getFlags(data.discord_user.public_flags);
-    if (data.discord_user.avatar && data.discord_user.avatar.includes("a_")) flags.push("Nitro");
+    flags.push("Nitro");
+    flags.push("Boosting");
 
     let userStatus: Record<string, any> | null = null;
     if (data.activities[0] && data.activities[0].type === 4) userStatus = data.activities[0];
@@ -155,8 +156,8 @@ const renderCard = async (body: LanyardTypes.Root, params: Parameters): Promise<
                         width: 400px;
                         height: ${divHeight()}px;
                         inset: 0;
-                        background-color: #${backgroundColor};
-                        color: ${theme === "dark" ? "#fff" : "#000"};
+                        background-color: black;
+                        color: #9745f5;
                         font-family: 'Century Gothic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
                         font-size: 16px;
                         display: flex;
@@ -227,7 +228,7 @@ const renderCard = async (body: LanyardTypes.Root, params: Parameters): Promise<
                                     </h1>
 
                                     ${hideBadges ? "" : flags.map(v => `
-                                        <img src="data:image/png;base64,${Badges[v]}" style="
+                                        <img src="${v === "Boosting" ? `data:image/gif;base64,${Badges[v]}` : `data:image/png;base64,${Badges[v]}`}" style="
                                             width: auto;
                                             height: 20px;
                                             position: relative;
@@ -253,7 +254,7 @@ const renderCard = async (body: LanyardTypes.Root, params: Parameters): Promise<
                                     <p style="
                                         font-size: 0.9rem;
                                         margin: 0;
-                                        color: ${theme === "dark" ? "#aaa" : "#333"};
+                                        color: rgba(151, 69, 245, 0.5);
                                         font-weight: 400;
                                         overflow: hidden;
                                         white-space: nowrap;
@@ -353,7 +354,7 @@ const renderCard = async (body: LanyardTypes.Root, params: Parameters): Promise<
                                     width: 279px;
                                 ">
                                     <p style="
-                                        color: ${theme === "dark" ? "#fff" : "#000"};
+                                        color: rgba(151, 69, 245);
                                         font-size: 0.85rem;
                                         font-weight: bold;
                                         overflow: hidden;
@@ -366,7 +367,7 @@ const renderCard = async (body: LanyardTypes.Root, params: Parameters): Promise<
                                             activity.details
                                                 ? `
                                             <p style="
-                                                color: ${theme === "dark" ? "#ccc" : "#777"};
+                                                color: rgba(151, 69, 245, 0.5);
                                                 overflow: hidden;
                                                 white-space: nowrap;
                                                 font-size: 0.85rem;
@@ -380,7 +381,7 @@ const renderCard = async (body: LanyardTypes.Root, params: Parameters): Promise<
                                             activity.state
                                                 ? `
                                             <p style="
-                                                color: ${theme === "dark" ? "#ccc" : "#777"};
+                                                color: rgba(151, 69, 245, 0.5);
                                                 overflow: hidden;
                                                 white-space: nowrap;
                                                 font-size: 0.85rem;
@@ -396,7 +397,7 @@ const renderCard = async (body: LanyardTypes.Root, params: Parameters): Promise<
                                         ${
                                             activity.timestamps?.start && !hideTimestamp ? `
                                             <p style="
-                                                color: ${theme === "dark" ? "#ccc" : "#777"};
+                                                color: rgba(151, 69, 245, 0.5);
                                                 overflow: hidden;
                                                 white-space: nowrap;
                                                 font-size: 0.85rem;

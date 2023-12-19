@@ -2,7 +2,6 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 import renderCard from "../../src/renderCard";
 import { isSnowflake } from "../../src/snowflake";
-import redis from "../../src/redis";
 
 type Data = {
     id?: string | string[];
@@ -51,13 +50,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         return res.status(400).send({
             error: `Something went wrong! If everything looks correct and this still occurs, please contact @notcnrad on Twitter.`,
         });
-    }
-
-    try {
-        let user = await redis.hget("users", userId);
-        if (!user) await redis.hset("users", userId, "true");
-    } catch {
-        null;
     }
 
     res.setHeader("Content-Type", "image/svg+xml; charset=utf-8");
